@@ -11,28 +11,8 @@
 <input @bind="productPrice" type="number" placeholder="Price" />
 <button @onclick="AddProduct">Add Product</button>
 
-@if (isLoading)
-{
-    <p><em>Loading products...</em></p>
-}
-else if (products.Count == 0)
-{
-    <p>No products available.</p>
-}
-else
-{
-    <ul>
-        @foreach (var product in products)
-        {
-            <li>@product</li>
-        }
-    </ul>
-}
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <p class="text-danger">@errorMessage</p>
-}
+
 
 @code {
     private string productName;
