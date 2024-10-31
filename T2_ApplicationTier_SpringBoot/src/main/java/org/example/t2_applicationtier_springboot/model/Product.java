@@ -1,8 +1,13 @@
 package org.example.t2_applicationtier_springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Product {
+    @JsonProperty("ProductId")
     private String productId;
+    @JsonProperty("ProductName")
     private String productName;
+    @JsonProperty("Price")
     private double price;
 
     // Constructors

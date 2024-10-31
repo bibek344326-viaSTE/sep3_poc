@@ -1,4 +1,5 @@
 ﻿@page "/products"
+@rendermode InteractiveServer
 @using Grpc.Core
 @using PresentationTier.Protos
 @using PresentationTier.Services
@@ -10,7 +11,7 @@
 <input @bind="productName" placeholder="Product Name" />
 <input @bind="productPrice" type="number" placeholder="Price" />
 <button @onclick="AddProduct">Add Product</button>
-
+<p style="color: red">@errorMessage</p>
 
 
 
@@ -21,8 +22,10 @@
     private string errorMessage;
     private bool isLoading = true;
 
-    private async Task AddProduct()
+   private async Task AddProduct()
     {
+        errorMessage = string.Empty; // Reset error message
+
         if (string.IsNullOrWhiteSpace(productName) || productPrice <= 0)
         {
             errorMessage = "Please enter a valid product name and price.";
@@ -38,11 +41,10 @@
 
         try
         {
-            var response = await ProductClient.AddProductAsync(request);
+            var response = ProductClient.AddProduct(request);
             if (response.Success)
             {
                 products.Add($"{productName} - {productPrice:C}");
-                // Clear the input fields after adding the product
                 productName = string.Empty;
                 productPrice = 0;
             }
